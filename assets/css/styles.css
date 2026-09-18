@@ -1,0 +1,51 @@
+@import 'reset.css';
+@import 'imports.css';
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f4f4;
+}
+
+/*  
+  * Header
+  *
+  */
+#app-header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 2rem 0;
+  background-color: #ffff;
+}
+
+#app-header h1 {
+  color: #ccb099;
+}
+
+#app-header button {
+  text-transform: uppercase;
+  background-color: #ccb099;
+  color: #ffff;
+  padding: 1rem 1.4rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/*  
+  * Footer
+  *
+  */
+#app-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+  color: #8d9197;
+  font-size: 1.4rem;
+}
+
+/*  
+  * Main Content
+  *
+  */
+#main-content {}
