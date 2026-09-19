@@ -67,8 +67,6 @@
         return;
       }
 
-      
-
       # if no query errors, redirect to '/' (pizzas list)
       header('Location: index.php');
     };

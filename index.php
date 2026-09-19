@@ -20,7 +20,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="assets/css/styles.css?v16">
+  <link rel="stylesheet" href="assets/css/styles.css?v48">
 </head>
 <body>
   <?php require 'partials/header.php' ?>
@@ -30,38 +30,49 @@
       Pizzas!
     </h2>
 
-    <div class="pizzas-container">
-      <?php foreach($pizzasList as $pizza){ ?>
-        <div class="pizza-card">
-          <img 
-            src="https://placehold.co/200x200" 
-            alt="<?php echo htmlspecialchars($pizza['title'])?> image"
-          >
+    <!-- fallback for when $pizzasList is empty -->
+    <?php if( !$pizzasList ): ?>
+      <div class="no-pizzas-fallback">
+        <span>
+          There is no pizzas to display yet... <a href="add.php">Create the first!</a>
+        </span>
+      </div>
+    <?php endif ?>
 
-          <h3>
-            <?php echo htmlspecialchars($pizza['title']) ?>
-          </h3>
+    <!-- if $pizzasList is not empty, display the pizzas -->
+    <?php if( count($pizzasList) >= 1): ?>
 
-          <ul>
-            <?php
-              $explodedIngredients = explode(',', $pizza['ingredients']);
+      <div class="pizzas-container">
+        <?php foreach($pizzasList as $pizza): ?>
+          <div class="pizza-card">
+            <img 
+              src="https://placehold.co/200x200" 
+              alt="<?php echo htmlspecialchars($pizza['title'])?> image"
+            >
 
-              foreach($explodedIngredients as $ingredient) {
-            ?>
-              <li>
-                <?php echo htmlspecialchars($ingredient) ?>
-              </li>
-            <?php } ?>
-          </ul>
+            <h3>
+              <?php echo htmlspecialchars($pizza['title']) ?>
+            </h3>
 
-          <footer>
-            <button>
-              More info
-            </button>
-          </footer>
-        </div>
-      <?php } ?>
-    </div>
+            <ul>
+              <!-- each ingredient on a list item -->
+              <?php foreach(explode(',', $pizza['ingredients']) as $ingredient): ?>
+                <li>
+                  <?php echo htmlspecialchars($ingredient) ?>
+                </li>
+              <?php endforeach ?>
+            </ul>
+
+            <footer>
+              <button>
+                More info
+              </button>
+            </footer>
+          </div>
+        <?php endforeach ?>
+      </div>
+
+    <?php endif ?>
   </main>
 
   <?php require 'partials/footer.php' ?>

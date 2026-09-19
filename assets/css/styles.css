@@ -63,6 +63,22 @@ body {
   letter-spacing: 0.05em;
 }
 
+#main-content .no-pizzas-fallback {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#main-content .no-pizzas-fallback span {
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+#main-content .no-pizzas-fallback a {
+  text-decoration: underline;
+}
+
 #main-content .pizzas-container {
   margin: 2rem auto 0 auto;
 
