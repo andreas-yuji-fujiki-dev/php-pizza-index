@@ -1,34 +1,44 @@
 <?php
+  $email = $title = $ingredients = '';
+  $errors = [ 'email'=>'', 'title'=>'', 'ingredients'=>'' ];
+
+  # functions to validate input fields
   function checkEmail(string $email){
-    $isValidEmail = filter_var($email, FILTER_VALIDATE_EMAIL);
-    if( !$isValidEmail )
-      echo 'Invalid email address ';
+    $passedFilter = filter_var($email, FILTER_VALIDATE_EMAIL);
+    if ( !$passedFilter ) return "Invalid email address";
   }
 
   function checkTitle(string $title){
-    $isValidTitle = preg_match('/^[a-zA-Z\s]+$/', $title);
-    
-    if( !$isValidTitle )
-      echo "Invalid title. Please use only lowercase letters, capital letters and spaces.";
+    $passedFilter = preg_match('/^[a-zA-Z\s]+$/', $title);
+    if ( !$passedFilter ) 
+      return "Title must contain only lowercase letters, capital letters and spaces";
   }
 
   function checkIngredients(string $ingredients){
-    $isValidIngredients = preg_match('/^([a-zA-Z\s]+)(,\s*[a-zA-Z\s]*)*$/', $ingredients);
-    if( !$isValidIngredients ){
-      echo "Invalid ingredients. Please inform them separated by comma";
-      return;
-    }
+    $passedFilter = preg_match('/^([a-zA-Z\s]+)(,\s*[a-zA-Z\s]*)*$/', $ingredients);
+    if( !$passedFilter ) 
+      return "Ingredients must contain only lowercase letters, capital letters, spaces and be separated with commas";
 
-    $explodedIngredients = explode(',', $ingredients);
-    if ( count($explodedIngredients) < 3 )
-      echo "Pizza ingredients list should have at least 3 items (example: dough, tomato sauce, cheese)";
+    $explodedIngredients = explode(',', $_POST['ingredients']);
+    if ( count($explodedIngredients) < 3 ) 
+      return "Ingredients list should have at least 3 items and contain only lowercase letters, capital letters and spaces";
   }
 
   # form validation
-  if(isset($_POST['submit'])){
-    checkEmail($_POST['email']);
-    checkTitle($_POST['title']);
-    checkIngredients($_POST['ingredients']);
+  if( isset($_POST['submit']) ){
+    $invalidEmailError = checkEmail($_POST['email']);
+    $invalidTitleError = checkTitle($_POST['title']);
+    $invalidIngredientsError = checkIngredients($_POST['ingredients']);
+
+    if( $invalidEmailError ) $errors['email'] = $invalidEmailError;
+    if ( $invalidTitleError ) $errors['title'] = $invalidTitleError;
+    if( $invalidIngredientsError ) $errors['ingredients'] = $invalidIngredientsError;
+
+    $email = $_POST['email'];
+    $title = $_POST['title'];
+    $ingredients = $_POST['ingredients'];
+
+    if( !array_filter($errors) ) header('Location: index.php');
   }
 ?>
 
@@ -57,7 +67,16 @@
         <label for="email">
           Your email:
         </label>
-        <input type="email" name="email" placeholder="your@email.com">
+        <input 
+          type="text" 
+          name="email" 
+          placeholder="your@email.com"
+          value="<?php echo $email ?>"
+        >
+
+        <span class="error">
+          <?php echo $errors['email'] ?>
+        </span>
       </div>
 
       <!-- pizza title -->
@@ -65,7 +84,16 @@
         <label for="title">
           Pizza title:
         </label>
-        <input type="text" name="title" placeholder="Pepperoni Pizza">
+        <input 
+          type="text" 
+          name="title" 
+          placeholder="Pepperoni Pizza"
+          value="<?php echo $title ?>"  
+        >
+
+        <span class="error">
+          <?php echo $errors['title'] ?>
+        </span>
       </div>
 
       <!-- pizza ingredients -->
@@ -73,7 +101,16 @@
         <label for="ingredients">
           Pizza ingredients (comma separated, minimum of 3)
         </label>
-        <input type="text" name="ingredients" placeholder="Dough, Tomato Sauce, Cheese, Pepperoni...">
+        <input 
+          type="text" 
+          name="ingredients" 
+          placeholder="Dough, Tomato Sauce, Cheese, Pepperoni..."
+          value="<?php echo $ingredients ?>"
+        >
+
+        <span class="error">
+          <?php echo $errors['ingredients'] ?>
+        </span>
       </div>
 
       <!-- submit -->

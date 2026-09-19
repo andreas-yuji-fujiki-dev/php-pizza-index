@@ -76,6 +76,7 @@ body {
   background-color: #ffff;
   border-radius: 0.2rem;
   padding: 1.85rem;
+  max-width: 36.375rem;
 }
 
 #add-pizza form .form-group {
@@ -94,6 +95,10 @@ body {
   background-color: #ffff;
   padding: 1rem;
   font-size: 1rem;
+}
+
+#add-pizza form .form-group .error {
+  color: red;
 }
 
 #add-pizza form .form-group input[type='submit']{
