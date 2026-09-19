@@ -30,9 +30,9 @@
     $invalidTitleError = checkTitle($_POST['title']);
     $invalidIngredientsError = checkIngredients($_POST['ingredients']);
 
-    if( $invalidEmailError ) $errors['email'] = $invalidEmailError;
-    if ( $invalidTitleError ) $errors['title'] = $invalidTitleError;
-    if( $invalidIngredientsError ) $errors['ingredients'] = $invalidIngredientsError;
+    if( $invalidEmailError ) $errors['email'] = "Invalid email. " . $invalidEmailError;
+    if ( $invalidTitleError ) $errors['title'] = "Invalid title. " . $invalidTitleError;
+    if( $invalidIngredientsError ) $errors['ingredients'] = "Invalid ingredients. " . $invalidIngredientsError;
 
     $email = $_POST['email'];
     $title = $_POST['title'];
