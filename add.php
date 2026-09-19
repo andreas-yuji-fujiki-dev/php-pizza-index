@@ -1,54 +1,34 @@
 <?php
   function checkEmail(string $email){
-    # should not be empty
-    if( empty($email) )
-      echo 'An email is required <br/>';
-
-    # should contain an `@` (at)
-    if( !str_contains($email, "@") ){
-      echo 'Email addresses must have an "@" (at) <br/>';
-      return;
-    }
-
-    # separating user from domain
-    $explodedEmail = explode('@', $email);
-    $emailName = $explodedEmail[0]; # johndoe
-    $emailDomain = $explodedEmail[1]; # gmail.com
-
-    # user should exist
-    if( empty($emailName) )
-      echo "Invalid email user (->email.user.here<-@email.com) <br/>";
-
-    # practice purposes only valid domains list
-    $validEmailDomains = ['gmail.com', 'yahoo.com', 'outlook.com'];
-
-    if( !in_array($emailDomain, $validEmailDomains))
-      echo "Invalid email domain. For practice purposes, we only accept: gmail.com, yahoo.com and outlook.com emails <br/>";
+    $isValidEmail = filter_var($email, FILTER_VALIDATE_EMAIL);
+    if( !$isValidEmail )
+      echo 'Invalid email address ';
   }
 
   function checkTitle(string $title){
-    # should not be empty
-    if( empty($title) ) 
-      echo "Title should not be empty! <br/>";
+    $isValidTitle = preg_match('/^[a-zA-Z\s]+$/', $title);
+    
+    if( !$isValidTitle )
+      echo "Invalid title. Please use only lowercase letters, capital letters and spaces.";
   }
 
-  function checkIngredients(array $ingredients){
-    # should not be empty and should not have a length lower than 3
-    if ( empty($ingredients) or count($ingredients) < 3 )
-      echo 'Pizza ingredients list should have at least 3 items (for example: dough, tomato sauce, cheese)';
+  function checkIngredients(string $ingredients){
+    $isValidIngredients = preg_match('/^([a-zA-Z\s]+)(,\s*[a-zA-Z\s]*)*$/', $ingredients);
+    if( !$isValidIngredients ){
+      echo "Invalid ingredients. Please inform them separated by comma";
+      return;
+    }
+
+    $explodedIngredients = explode(',', $ingredients);
+    if ( count($explodedIngredients) < 3 )
+      echo "Pizza ingredients list should have at least 3 items (example: dough, tomato sauce, cheese)";
   }
 
   # form validation
   if(isset($_POST['submit'])){
-    # check email
     checkEmail($_POST['email']);
-
-    # check title
     checkTitle($_POST['title']);
-
-    # check ingredients
-    $arrayOfIngredients = explode(',', $_POST['ingredients']);
-    checkIngredients($arrayOfIngredients);
+    checkIngredients($_POST['ingredients']);
   }
 ?>
 
