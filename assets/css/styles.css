@@ -48,7 +48,101 @@ body {
   * Main Content
   *
   */
-#main-content {}
+#main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 0;
+  gap: 4rem;
+}
+
+#main-content h2 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+}
+
+#main-content .pizzas-container {
+  margin: 2rem auto 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5rem;
+  justify-items: center;
+}
+
+#main-content .pizza-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 22rem;
+  height: auto;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  padding: 2rem 2rem 0 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  align-items: center;
+  text-align: center;
+}
+
+#main-content .pizza-card img {
+  margin-top: -5rem;
+  width: 14rem;
+  height: 14rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+#main-content .pizza-card h3 {
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: #333333;
+  margin: 0.5rem 0 0 0;
+}
+
+#main-content .pizza-card ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.95rem;
+}
+
+#main-content .pizza-card li {
+  font-weight: 300;
+  color: #999999;
+  margin: 0;
+}
+
+#main-content .pizza-card footer {
+  margin-top: 1.5rem;
+  border-top: 1px solid #e8e8e8;
+  width: calc(100% + 4rem);
+  margin-left: -2rem;
+  margin-right: -2rem;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#main-content .pizza-card footer button {
+  background-color: transparent;
+  color: #d4a574;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0;
+}
+
+#main-content .pizza-card footer button:hover {
+  color: #c49460;
+}
 
 /*  
   * Add Pizza page
@@ -62,10 +156,6 @@ body {
   gap: 5rem;
 
   padding: 5rem 0;
-}
-
-#add-pizza h2 {
-  font-size: 2.4rem;
 }
 
 #add-pizza form {
