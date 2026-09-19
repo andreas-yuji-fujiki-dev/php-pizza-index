@@ -1,8 +1,9 @@
 <?php
+  # input values and errors storage
   $email = $title = $ingredients = '';
   $errors = [ 'email'=>'', 'title'=>'', 'ingredients'=>'' ];
 
-  # functions to validate input fields
+  # functions for input fields validation
   function checkEmail(string $email){
     $passedFilter = filter_var($email, FILTER_VALIDATE_EMAIL);
     if ( !$passedFilter ) return "Invalid email address";
@@ -19,26 +20,58 @@
     if( !$passedFilter ) 
       return "Ingredients must contain only lowercase letters, capital letters, spaces and be separated with commas";
 
-    $explodedIngredients = explode(',', $_POST['ingredients']);
+    $explodedIngredients = explode(',', $ingredients);
     if ( count($explodedIngredients) < 3 ) 
-      return "Ingredients list should have at least 3 items and contain only lowercase letters, capital letters and spaces";
+      return "Ingredients list should have at least 3 items";
   }
 
-  # form validation
+  # form validation when it's submited
   if( isset($_POST['submit']) ){
+    # these variables will store error messages if there is invalid inputs
     $invalidEmailError = checkEmail($_POST['email']);
     $invalidTitleError = checkTitle($_POST['title']);
     $invalidIngredientsError = checkIngredients($_POST['ingredients']);
 
-    if( $invalidEmailError ) $errors['email'] = "Invalid email. " . $invalidEmailError;
+    # if there is some error messages, save it inside $errors list
+    if( $invalidEmailError ) $errors['email'] = $invalidEmailError;
     if ( $invalidTitleError ) $errors['title'] = "Invalid title. " . $invalidTitleError;
     if( $invalidIngredientsError ) $errors['ingredients'] = "Invalid ingredients. " . $invalidIngredientsError;
 
+    # set input value as the $_POST request values (no need to retype to fix invalid inputs) 
     $email = $_POST['email'];
     $title = $_POST['title'];
     $ingredients = $_POST['ingredients'];
 
-    if( !array_filter($errors) ) header('Location: index.php');
+    # if valid input values
+    if( !array_filter($errors) ){
+      # save the pizza on database
+      require 'config/db_connect.php';
+      $safeSQL_email = mysqli_real_escape_string($dbConnection, $email);
+      $safeSQL_title = mysqli_real_escape_string($dbConnection, $title);
+      $safeSQL_ingredients = mysqli_real_escape_string($dbConnection, $ingredients);
+
+      $query = 
+        "INSERT INTO pizzas (
+          email, 
+          title, 
+          ingredients
+        ) VALUES (
+          '$safeSQL_email',
+          '$safeSQL_title',
+          '$safeSQL_ingredients'
+        )";
+      
+      $queryResult = mysqli_query($dbConnection, $query);
+      if(!$queryResult) {
+        echo "Query error: " . mysqli_error($dbConnection);
+        return;
+      }
+
+      
+
+      # if no query errors, redirect to '/' (pizzas list)
+      header('Location: index.php');
+    };
   }
 ?>
 
