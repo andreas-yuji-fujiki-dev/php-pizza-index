@@ -20,7 +20,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="assets/css/styles.css?v48">
+  <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
 <body>
   <?php require 'partials/header.php' ?>
@@ -34,7 +34,7 @@
     <?php if( !$pizzasList ): ?>
       <div class="no-pizzas-fallback">
         <span>
-          There is no pizzas to display yet... <a href="add.php">Create the first!</a>
+          There is no pizzas to display yet... <a href="/add.php">Create the first!</a>
         </span>
       </div>
     <?php endif ?>
@@ -64,9 +64,11 @@
             </ul>
 
             <footer>
-              <button>
-                More info
-              </button>
+              <a href="/details.php/?id=<?php echo $pizza['id'] ?>">
+                <button>
+                  More info
+                </button>
+              </a>
             </footer>
           </div>
         <?php endforeach ?>
