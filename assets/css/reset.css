@@ -14,10 +14,15 @@ h2 {
 }
 
 button {
-  cursor: pointer;
   border: none;
-  outline: none;
+  cursor: pointer;
   border-radius: 0.2rem;
+  text-transform: uppercase;
+  background-color: #ccb099;
+  color: #ffff;
+  padding: 1rem 1.4rem;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 ul, ol {

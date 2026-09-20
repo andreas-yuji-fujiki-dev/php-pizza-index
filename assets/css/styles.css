@@ -91,6 +91,7 @@ body {
 #main-content .pizza-card {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 1.5rem;
   width: 22rem;
   height: auto;
@@ -158,6 +159,89 @@ body {
 
 #main-content .pizza-card footer button:hover {
   color: #c49460;
+}
+
+/*  
+  * Details Page
+  *
+  */
+
+#details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5rem;
+
+  padding: 5rem;
+}
+
+#details .about {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+#details .about .details {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#details .about .details {
+  border-radius: 0.2rem;
+  padding: 2rem 3rem;
+  background-color: #ffff;
+}
+
+#details .about .details .created-by .user-name {
+  text-transform: capitalize;
+  font-weight: 700;
+}
+
+#details .about .creation-date .label {
+  font-weight: 700;
+}
+
+#details .about .age .label {
+  font-weight: 700;
+}
+
+#details .about .ingredients-container {
+  background-color: #ffff;
+  
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.2rem;
+  padding: 2rem 3rem;
+}
+
+#details .about .ingredients-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+#details .about .ingredients-container h3 {
+  font-size: 1.4rem;
+}
+
+#details .about .ingredients-container ul {
+  list-style: disc;
+}
+
+#details .about .action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
+#details .about .action-buttons button.delete {
+  background-color: #ff0000;
+}
+
+#details .about .action-buttons button.edit {
+  background-color: #ff8502;
 }
 
 /*  
