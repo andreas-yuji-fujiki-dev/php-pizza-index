@@ -60,12 +60,16 @@
           '$safeSQL_title',
           '$safeSQL_ingredients'
         )";
-      
+
       $queryResult = mysqli_query($dbConnection, $query);
+      mysqli_close($dbConnection);
+      
       if(!$queryResult) {
         echo "Query error: " . mysqli_error($dbConnection);
         return;
       }
+      
+      mysqli_free_result($queryResult);
 
       # if no query errors, redirect to '/' (pizzas list)
       header('Location: index.php');
@@ -82,7 +86,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
 <body>
   <?php require 'partials/header.php' ?>
