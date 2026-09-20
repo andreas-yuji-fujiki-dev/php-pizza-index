@@ -4,7 +4,7 @@
       Pizza Index
     </h1>
   </a>
-  <a href="add.php">
+  <a href="/add.php">
     <button>
       Add a Pizza
     </button>
