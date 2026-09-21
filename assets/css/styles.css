@@ -176,6 +176,100 @@ body {
   padding: 5rem;
 }
 
+#details .delete-confirm-backdrop, .edit-modal-backdrop {
+  position: absolute;
+  z-index: 10;
+
+  background-color: #000;
+  opacity: 0.5;
+
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#details .delete-confirm-modal, .edit-modal {
+  max-width: 37.5rem;
+  width: 100%;
+
+  position: absolute;
+  z-index: 20;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background-color: #fff;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  padding: 2rem;
+  border-radius: 0.2rem;
+}
+
+#details .delete-confirm-modal span.confirmation,
+#details .edit-modal span.pizza-being-edited  {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+#details .delete-confirm-modal span.pizza-to-delete {
+  font-size: 1.1rem;
+}
+
+#details .delete-confirm-modal form,
+#details .edit-modal form .action-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+#details .delete-confirm-modal .deletion-error {
+  align-self: flex-end;
+  max-width: 18.75rem;
+  color: #ff0000;
+}
+
+#details .delete-confirm-modal form input[name="cancel-delete"],
+#details .edit-modal .action-buttons input[name="confirm-edit"] {
+  background-color: #ff8400;
+}
+
+#details .delete-confirm-modal form input[name="confirm-delete"],
+#details .edit-modal .action-buttons input[name="cancel-edit"] {
+  background-color: #ff0000;
+}
+
+#details .edit-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+#details .edit-modal form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#details .edit-modal form .form-group label {
+  font-size: 1.2rem;
+}
+
+#details .edit-modal form .form-group input {
+  border: 0.12rem solid #000;
+  border-radius: 0.2rem;
+  padding: 1rem;
+  font-size: 1.1rem;
+}
+
+#details .edit-modal form .form-group .input-error {
+  color: #ff0000;
+}
+
 #details .about {
   display: flex;
   flex-direction: column;
@@ -236,11 +330,11 @@ body {
   gap: 1rem;
 }
 
-#details .about .action-buttons button.delete {
+#details .about .action-buttons input.delete {
   background-color: #ff0000;
 }
 
-#details .about .action-buttons button.edit {
+#details .about .action-buttons input.edit {
   background-color: #ff8502;
 }
 
