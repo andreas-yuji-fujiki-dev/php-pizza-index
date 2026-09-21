@@ -1,3 +1,10 @@
+<?php
+  /** @var string $email */
+  /** @var string $title */
+  /** @var string $ingredients */
+  /** @var array $errors  */
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

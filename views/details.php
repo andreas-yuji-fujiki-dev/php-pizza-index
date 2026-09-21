@@ -1,3 +1,16 @@
+<?php
+  /** @var PizzaModel $specificPizza */
+  /** @var bool $showEditModal */
+  /** @var bool $showDeleteModal */
+  /** @var string $deletionError */
+  /** @var string $editingError */
+
+  /** @var string $editInput_newEmail */
+  /** @var string $editInput_newTitle */
+  /** @var string $editInput_newIngredients */
+  /** @var array $editInputErrors */
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
