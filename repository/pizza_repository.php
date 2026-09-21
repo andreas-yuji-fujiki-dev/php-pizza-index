@@ -160,7 +160,7 @@ class PizzaRepository
     $safeSQL_title = mysqli_real_escape_string($dbConnection, $pizza->title);
     $safeSQL_ingredients = mysqli_real_escape_string($dbConnection, $pizza->ingredients);
 
-    # query to update seting each field
+    # query to update setting each field
     $query = 
     "UPDATE pizzas
       SET
