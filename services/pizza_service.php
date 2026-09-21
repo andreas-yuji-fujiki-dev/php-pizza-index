@@ -38,16 +38,17 @@
     }
 
     /** @return bool|array */
-    public function updatePizza(PizzaModel $pizzaData){
-      # array to store errors for each input field
-      $errors = $this->validate->allFormFields($pizzaData);
+    public function updatePizza(PizzaModel $pizzaData)
+    {
+        # array to store errors for each input field
+        $errors = $this->validate->allFormFields($pizzaData);
 
-      # return errors if exists
-      if( !empty(array_filter($errors)) )
-        return $errors;
+        # return errors if exists
+        if( is_array($errors) && !empty(array_filter($errors)) )
+            return $errors;
 
-      # success case -> update pizza
-      return $this->pizzaRepository->queryUpdate($pizzaData);
+        # success case -> update pizza
+        return $this->pizzaRepository->queryUpdate($pizzaData);
     }
 
     /** @return bool */
