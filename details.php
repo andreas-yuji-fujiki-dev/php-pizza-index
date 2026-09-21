@@ -1,3 +1,5 @@
 <?php
-  require __DIR__ . '/views/details.php';
+  require_once __DIR__ . '/controllers/pizza_controller.php';
+  $controller = new Controller();
+  $controller->detailsPage();
 ?>
