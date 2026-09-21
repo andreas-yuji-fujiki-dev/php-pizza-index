@@ -34,7 +34,7 @@
         <?php foreach($pizzasList as $pizza): ?>
           <div class="pizza-card">
             <img 
-              src="https://placehold.co/200x200" 
+              src="../assets/images/pizza.svg" 
               alt="<?php echo htmlspecialchars($pizza->title)?> image"
             >
 
