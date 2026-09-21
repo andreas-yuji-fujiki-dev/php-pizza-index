@@ -57,113 +57,106 @@
 
     public function detailsPage()
     {
-        $specificPizza = null;
+      $specificPizza = null;
 
-        $showEditModal = false;
+      $showEditModal = false;
+      $showDeleteModal = false;
+
+      $deletionError = '';
+      $editingError = '';
+
+      // edit input values and individual edit input errors
+      $editInput_newEmail = $editInput_newTitle = $editInput_newIngredients = '';
+      $editInputErrors = [ 'email' => '', 'title' => '', 'ingredients' => ''];
+
+      # get pizza details
+      if( isset($_GET['id']) ){
+        $serviceResponse = $this->pizzaService->getPizzaById($_GET['id']);
+
+        if( $serviceResponse ){
+            $specificPizza = $serviceResponse;
+        }
+      }
+
+      /*  DELETE */
+
+      # open DELETE modal
+      if( isset($_POST['open-delete-modal']) ){
+        $showDeleteModal = true;
+      }
+
+      # close DELETE modal
+      if( isset($_POST['cancel-delete']) ){
         $showDeleteModal = false;
+      }
 
-        $deletionError = '';
-        $editingError = '';
+      # DELETE pizza
+      if( isset($_POST['confirm-delete']) ){
+          $serviceResponse = $this->pizzaService->deletePizza($_POST['id-to-delete']);
 
-        // edit input values and individual edit input errors
-        $editInput_newEmail = $editInput_newTitle = $editInput_newIngredients = '';
-        $editInputErrors = [ 'email' => '', 'title' => '', 'ingredients' => ''];
+          if( !$serviceResponse )
+          {
+            $deletionError =
+                'We were unable to delete the pizza; please try reloading the page or try again later.';
 
-        # get pizza details
-        if( isset($_GET['id']) ){
-            $serviceResponse = $this->pizzaService->getPizzaById($_GET['id']);
-
-            if( $serviceResponse ){
-                $specificPizza = $serviceResponse;
-            }
-        }
-
-        /*  
-          * DELETE
-          *
-          */
-
-        # open DELETE modal
-        if( isset($_POST['open-delete-modal']) ){
             $showDeleteModal = true;
+          }
+          else {
+            header('Location: /');
+            exit;
+          }
+      }
+
+      /*  EDIT */
+      # open EDIT modal
+      if( isset($_POST['open-edit-modal']) ){
+          $showEditModal = true;
+
+          # pre-fill inputs with current pizza data when opening the modal
+          if( $specificPizza ){
+              $editInput_newEmail = $specificPizza->email;
+              $editInput_newTitle = $specificPizza->title;
+              $editInput_newIngredients = $specificPizza->ingredients;
+          }
+      }
+
+      # close EDIT modal
+      if( isset($_POST['cancel-edit']) ){
+          $showEditModal = false;
+      }
+
+      # EDIT pizza
+      if( isset($_POST['confirm-edit']) ){
+        # keep modal open while processing the request
+        $showEditModal = true;
+
+        # get submitted values
+        $editInput_newEmail = $_POST['new-email'];
+        $editInput_newTitle = $_POST['new-title'];
+        $editInput_newIngredients = $_POST['new-ingredients'];
+
+        # mount pizza update data
+        $pizzaUpdateData = new PizzaModel();
+
+        $pizzaUpdateData->id = $_POST['id-to-update'];
+        $pizzaUpdateData->email = $editInput_newEmail;
+        $pizzaUpdateData->title = $editInput_newTitle;
+        $pizzaUpdateData->ingredients = $editInput_newIngredients;
+
+        # send data to service
+        $serviceResponse = $this->pizzaService->updatePizza($pizzaUpdateData);
+
+        # if server return validation errors
+        if( is_array($serviceResponse) && !empty(array_filter($serviceResponse)) )
+            $editInputErrors = $serviceResponse;
+        # success case
+        else {
+          header("Location: /details.php?id={$_POST['id-to-update']}");
+          exit;
         }
+      }
 
-        # close DELETE modal
-        if( isset($_POST['cancel-delete']) ){
-            $showDeleteModal = false;
-        }
-
-        # DELETE pizza
-        if( isset($_POST['confirm-delete']) ){
-            $serviceResponse = $this->pizzaService->deletePizza($_POST['id-to-delete']);
-
-            if( !$serviceResponse ){
-                $deletionError =
-                    'We were unable to delete the pizza; please try reloading the page or try again later.';
-
-                $showDeleteModal = true;
-            }
-            else {
-                header('Location: /');
-                exit;
-            }
-        }
-
-        /*  
-          * EDIT
-          *
-          */
-
-        # open EDIT modal
-        if( isset($_POST['open-edit-modal']) ){
-            $showEditModal = true;
-
-            # pre-fill inputs with current pizza data when opening the modal
-            if( $specificPizza ){
-                $editInput_newEmail = $specificPizza->email;
-                $editInput_newTitle = $specificPizza->title;
-                $editInput_newIngredients = $specificPizza->ingredients;
-            }
-        }
-
-        # close EDIT modal
-        if( isset($_POST['cancel-edit']) ){
-            $showEditModal = false;
-        }
-
-        # EDIT pizza
-        if( isset($_POST['confirm-edit']) ){
-
-            # keep modal open while processing the request
-            $showEditModal = true;
-
-            # get submitted values
-            $editInput_newEmail = $_POST['new-email'];
-            $editInput_newTitle = $_POST['new-title'];
-            $editInput_newIngredients = $_POST['new-ingredients'];
-
-            # mount pizza update data
-            $pizzaUpdateData = new PizzaModel();
-
-            $pizzaUpdateData->id = $_POST['id-to-update'];
-            $pizzaUpdateData->email = $editInput_newEmail;
-            $pizzaUpdateData->title = $editInput_newTitle;
-            $pizzaUpdateData->ingredients = $editInput_newIngredients;
-
-            # send data to service
-            $serviceResponse = $this->pizzaService->updatePizza($pizzaUpdateData);
-
-            # if server return validation errors
-            if( is_array($serviceResponse) && !empty(array_filter($serviceResponse)) )
-                $editInputErrors = $serviceResponse;
-            # success case
-            else {
-                header("Location: /details.php?id={$_POST['id-to-update']}");
-                exit;
-            }
-        }
-
-        require __DIR__ . '/../views/details.php';
+      require __DIR__ . '/../views/details.php';
     }
   }
 ?>
