@@ -1,15 +1,3 @@
-<?php
-  require(__DIR__ . "/../config/db_connect.php");
-
-  $query = "SELECT id, title, ingredients FROM pizzas ORDER BY created_at";
-  $queryResult = mysqli_query($dbConnection, $query);
-
-  $pizzasList = mysqli_fetch_all($queryResult, MYSQLI_ASSOC);
-
-  mysqli_free_result($queryResult);
-  mysqli_close($dbConnection);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,16 +35,16 @@
           <div class="pizza-card">
             <img 
               src="https://placehold.co/200x200" 
-              alt="<?php echo htmlspecialchars($pizza['title'])?> image"
+              alt="<?php echo htmlspecialchars($pizza->title)?> image"
             >
 
             <h3>
-              <?php echo htmlspecialchars($pizza['title']) ?>
+              <?php echo htmlspecialchars($pizza->title) ?>
             </h3>
 
             <ul>
               <!-- each ingredient on a list item -->
-              <?php foreach(explode(',', $pizza['ingredients']) as $ingredient): ?>
+              <?php foreach(explode(',', $pizza->ingredients) as $ingredient): ?>
                 <li>
                   <?php echo htmlspecialchars($ingredient) ?>
                 </li>
@@ -64,7 +52,7 @@
             </ul>
 
             <footer>
-              <a href="/details.php/?id=<?php echo $pizza['id'] ?>">
+              <a href="/details.php/?id=<?php echo $pizza->id ?>">
                 <button>
                   More info
                 </button>
