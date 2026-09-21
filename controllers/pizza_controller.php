@@ -20,7 +20,7 @@
     {
       # input values
       $email = $title = $ingredients = '';
-      $errors = null;
+      $errors = ['email' => '', 'title' => '', 'ingredients' => ''];
       
       # mounting the new pizza object when form is submited
       if( isset($_POST['submit']) ){
