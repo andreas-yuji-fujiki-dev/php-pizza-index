@@ -57,15 +57,16 @@
 
     public function detailsPage()
     {
+      # pizza to capture details 
       $specificPizza = null;
 
-      $showEditModal = false;
-      $showDeleteModal = false;
+      # show/hide edit/delete modal
+      $showEditModal = $showDeleteModal = false;
 
-      $deletionError = '';
-      $editingError = '';
+      # edit / delete errors
+      $deletionError = $editingError = '';
 
-      // edit input values and individual edit input errors
+      # edit input values and individual edit input errors
       $editInput_newEmail = $editInput_newTitle = $editInput_newIngredients = '';
       $editInputErrors = [ 'email' => '', 'title' => '', 'ingredients' => ''];
 
