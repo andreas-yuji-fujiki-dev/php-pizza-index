@@ -3,6 +3,7 @@
 2. error logging
 3. duplicates avoiding 
 4. notifications system
-5. docker image
-6. docs
-7. readme
+5. database seeder to populate the database with example data
+6. docker image
+7. docs
+8. readme
