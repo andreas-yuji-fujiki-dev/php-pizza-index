@@ -1,0 +1,49 @@
+/* Tablet and up */
+@media (min-width: 48rem) {
+  body #app-header {
+    padding: 2rem 3rem;
+  }
+
+  body #main-content .pizzas-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4rem;
+  }
+
+  body #main-content .pizza-card {
+    --card-padding-x: 2rem;
+    padding: 2rem 2rem 0 2rem;
+  }
+
+  body #details {
+    padding: 4rem 3rem;
+  }
+
+  body #details .delete-confirm-modal,
+  body .edit-modal {
+    padding: 2rem;
+  }
+
+  body #add-pizza {
+    padding: 4rem 2rem;
+  }
+}
+
+/* Desktop and up */
+@media (min-width: 75rem) {
+  body #app-header {
+    padding: 2rem 4rem;
+  }
+
+  body #main-content .pizzas-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5rem;
+  }
+
+  body #details {
+    padding: 5rem;
+  }
+
+  body #add-pizza {
+    padding: 5rem 0;
+  }
+}
