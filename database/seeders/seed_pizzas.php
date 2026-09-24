@@ -294,22 +294,32 @@ $sql = "
 
 $databaseConfig = new DatabaseConfig();
 
-$stmt = mysqli_prepare($databaseConfig->connect(), $sql);
+# connecting to database
+$dbConnection = $databaseConfig->connect();
 
+# fill a pizza model with pizza data for each item on the list
+# then, save it on database
 foreach ($pizzas as $pizza) {
-    mysqli_stmt_bind_param(
-        $stmt,
-        'issss',
-        $pizza['id'],
-        $pizza['title'],
-        $pizza['ingredients'],
-        $pizza['email'],
-        $pizza['created_at']
-    );
+    $query = "
+        INSERT IGNORE INTO pizzas (
+            id, 
+            title, 
+            ingredients, 
+            email, 
+            created_at
+        ) VALUES (
+            '{$pizza['id']}',
+            '{$pizza['title']}', 
+            '{$pizza['ingredients']}', 
+            '{$pizza['email']}', 
+            '{$pizza['created_at']}'
+        )
+    ";
 
-    mysqli_stmt_execute($stmt);
+    mysqli_query($dbConnection, $query);
 }
 
-mysqli_stmt_close($stmt);
+# disconnecting from database
+$databaseConfig->disconnect($dbConnection);
 
 echo "Pizzas seeded successfully!\n";
