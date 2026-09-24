@@ -1,0 +1,37 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_USER: ${DB_USER:-pizza_user}
+      DB_PASSWORD: ${DB_PASSWORD:-pizza_password}
+      DB_NAME: pizza_index
+
+  db:
+    image: mariadb:11
+    environment:
+      MARIADB_DATABASE: pizza_index
+      MARIADB_USER: ${DB_USER:-pizza_user}
+      MARIADB_PASSWORD: ${DB_PASSWORD:-pizza_password}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root_password}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+
+volumes:
+  db_data:
