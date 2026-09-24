@@ -6,7 +6,7 @@
 
   body #main-content .pizzas-container {
     grid-template-columns: repeat(2, 1fr);
-    gap: 4rem;
+    gap: 5rem;
   }
 
   body #main-content .pizza-card {
@@ -29,14 +29,15 @@
 }
 
 /* Desktop and up */
-@media (min-width: 75rem) {
+@media (min-width: 90.625rem) {
   body #app-header {
     padding: 2rem 4rem;
   }
 
   body #main-content .pizzas-container {
     grid-template-columns: repeat(3, 1fr);
-    gap: 0;
+    column-gap: 0;
+    row-gap: 5rem;
   }
 
   body #details {

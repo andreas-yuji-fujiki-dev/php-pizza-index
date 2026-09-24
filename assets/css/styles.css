@@ -1,6 +1,6 @@
-@import 'responsivity.css';
 @import 'reset.css';
 @import 'imports.css';
+@import 'responsivity.css';
 
 body {
   font-family: 'Poppins', sans-serif;
